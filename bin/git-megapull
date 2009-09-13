@@ -1,6 +1,14 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
+# ABSTRACT: clone or update all repositories found elsewhere
 
 use Git::Megapull;
 Git::Megapull->run;
+
+=head1 SEE INSTEAD
+
+L<Git::Megapull>
+
+=cut
+
