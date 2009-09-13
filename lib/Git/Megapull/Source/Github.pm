@@ -49,7 +49,7 @@ sub repo_uris {
   for my $repo (@repos) {
     $repo_uri{ $repo->{name} } = sprintf 'git@github.com:%s/%s.git',
       $login,
-      $repo;
+      $repo->{name};
   }
 
   return \%repo_uri;
