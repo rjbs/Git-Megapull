@@ -82,8 +82,6 @@ sub execute {
   my %existing_dir  = map { $_ => 1 } grep { $_ !~ m{\A\.} and -d $_ } <*>;
 
   for my $name (sort { $a cmp $b } keys %$repos) {
-    # next if $repo->{private} and not $opt->{private};
-
     my $name = $name;
     my $uri  = $repos->{ $name };
 

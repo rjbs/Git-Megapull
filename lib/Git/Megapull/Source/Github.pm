@@ -47,6 +47,8 @@ sub repo_uris {
 
   my %repo_uri;
   for my $repo (@repos) {
+    # next if $repo->{private} and not $opt->{private};
+
     $repo_uri{ $repo->{name} } = sprintf 'git@github.com:%s/%s.git',
       $login,
       $repo->{name};
