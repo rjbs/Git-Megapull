@@ -1,6 +1,7 @@
 use strict;
 use warnings;
 package Git::Megapull::Source::Github;
+use base 'Git::Megapull::Source';
 # ABSTRACT: clone/update all your repositories from github.com
 
 use LWP::Simple qw(get);

@@ -5,6 +5,7 @@ use base 'App::Cmd::Simple';
 # ABSTRACT: clone or update all repositories found elsewhere
 
 use autodie;
+use Config::INI::Reader;
 use String::RewritePrefix;
 
 =head1 OVERVIEW
@@ -55,11 +56,17 @@ sub opt_spec {
 sub execute {
   my ($self, $opt, $args) = @_;
 
-  $self->usage_error("no source provided") unless $opt->{source};
+  my $source = $opt->{source};
+  unless ($source) {
+    my $config = Config::INI::Reader->read_file("$ENV{HOME}/.gitconfig");
+    $source = $config->{megapull}{source};
+  }
 
-  my $source = String::RewritePrefix->rewrite(
+  $self->usage_error("no source provided") unless $source;
+
+  $source = String::RewritePrefix->rewrite(
     { '' => 'Git::Megapull::Source::', '=' => '' },
-    $opt->{source},
+    $source,
   );
 
   # XXX: validate $source as module name -- rjbs, 2009-09-13
