@@ -87,12 +87,14 @@ sub execute {
     my $name = $name;
     my $uri  = $repos->{ $name };
 
-    if (-d $name and not $opt->{clonely}) {
-      __do_cmd(
-        "cd $name && "
-        . "git fetch $opt->{origin} && "
-        . "git merge $opt->{origin}/master 2>&1"
-      );
+    if (-d $name) {
+      if (not $opt->{clonely}) {
+        __do_cmd(
+          "cd $name && "
+          . "git fetch $opt->{origin} && "
+          . "git merge $opt->{origin}/master 2>&1"
+        );
+      }
     } else {
       my $bare = $opt->{bare} ? '--bare' : '';
       __do_cmd("git clone -o $opt->{origin} $bare $uri 2>&1");
