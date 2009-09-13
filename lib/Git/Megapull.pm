@@ -26,6 +26,9 @@ sign, like C<=Git::Megapull::Source::Github> or as a short form, dropping the
 standard prefix.  The previous source, for example, could be given as just
 C<Github>.
 
+If no C<--source> option is given, the F<megapull.source> option in
+F<~/.gitconfig> will be consulted.
+
 =head1 TODO
 
   * prevent updates that are not fast forwards
