@@ -65,6 +65,8 @@ sub execute {
     $source = $config->{megapull}{source};
   }
 
+  $source ||= $self->_default_source;
+
   $self->usage_error("no source provided") unless $source;
 
   $source = String::RewritePrefix->rewrite(
@@ -90,15 +92,14 @@ sub execute {
 
     if (-d $name) {
       if (not $opt->{clonely}) {
-        __do_cmd(
+        $self->__do_cmd(
           "cd $name && "
           . "git fetch $opt->{origin} && "
           . "git merge $opt->{origin}/master 2>&1"
         );
       }
     } else {
-      my $bare = $opt->{bare} ? '--bare' : '';
-      __do_cmd("git clone -o $opt->{origin} $bare $uri 2>&1");
+      $self->_clone_repo($name, $uri, $opt);
     }
 
     delete $existing_dir{ $name };
@@ -109,8 +110,16 @@ sub execute {
   }
 }
 
+sub _default_source {}
+sub _clone_repo {
+  my ($self, $repo, $uri, $opt) = @_;
+
+  my $bare = $opt->{bare} ? '--bare' : '';
+  $self->__do_cmd("git clone -o $opt->{origin} $bare $uri 2>&1");
+}
+
 sub __do_cmd {
-  my ($cmd) = @_;
+  my ($self, $cmd) = @_;
   print "$cmd\n";
   print `$cmd`;
 }
