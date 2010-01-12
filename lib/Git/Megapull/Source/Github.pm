@@ -6,7 +6,7 @@ use base 'Git::Megapull::Source';
 
 use LWP::Simple qw(get);
 use Config::INI::Reader;
-use JSON::XS;
+use JSON 2 ();
 
 =head1 OVERVIEW
 
@@ -39,7 +39,7 @@ sub repo_uris {
   my $json =
     get("http://github.com/api/v1/json/$login?login=$login&token=$token");
 
-  my $data = eval { JSON::XS->new->decode($json) };
+  my $data = eval { JSON->new->decode($json) };
 
   die "BAD JSON\n$@\n$json\n" unless $data;
 
