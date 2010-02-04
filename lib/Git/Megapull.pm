@@ -59,9 +59,10 @@ sub opt_spec {
 sub execute {
   my ($self, $opt, $args) = @_;
 
+  my $config = Config::INI::Reader->read_file("$ENV{HOME}/.gitconfig");
+
   my $source = $opt->{source};
   unless ($source) {
-    my $config = Config::INI::Reader->read_file("$ENV{HOME}/.gitconfig");
     $source = $config->{megapull}{source};
   }
 
@@ -82,7 +83,7 @@ sub execute {
   die "bad source: not a Git::Megapull::Source\n"
     unless eval { $source->isa('Git::Megapull::Source') };
 
-  my $repos = $source->repo_uris;
+  my $repos = $source->repo_uris($config, $args);
 
   my %existing_dir  = map { $_ => 1 } grep { $_ !~ m{\A\.} and -d $_ } <*>;
 
