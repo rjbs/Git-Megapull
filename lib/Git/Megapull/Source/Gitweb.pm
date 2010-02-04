@@ -8,6 +8,33 @@ use Term::ReadKey;
 use LWP::UserAgent;
 use Getopt::Long qw(GetOptionsFromArray);
 
+=head1 OVERVIEW
+
+This source for C<git-megapull> introspects a Gitweb installation to determine the list of projects to clone. It requires a few extra options:
+C<< --url=<some url> >> to specify the url of the gitweb installation, and
+either C<--anon> or C<< --user=<ssh username> >> to specify how to actually
+clone the repositories. C<--anon> will use a repository url of the form
+B<git://base.url.com/Project.git>, and C<--user> will use a repository url of
+the form B<user@base.url.com:Project.git>.
+
+If the gitweb installation requires an HTTP username and password, this source
+will prompt you for them.
+
+=head1 WARNING
+
+This source will probably be broken out into its own dist in the future.
+
+=head1 TODO
+
+  * see if there's a better way to get the repo list
+
+=method repo_uris
+
+This routine does all the work and returns what Git::Megapull expects: a
+hashref with repo names as keys and repo URIs as values.
+
+=cut
+
 sub repo_uris {
     my $self = shift;
     my ($config, $args) = @_;

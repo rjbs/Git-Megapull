@@ -38,9 +38,11 @@ F<~/.gitconfig> will be consulted.
 
 Right now, the API for how sources work is pretty lame and likely to change.
 Basically, a source is a class that implements the C<repo_uris> method, which
-returns a hashref like C<< { $repo_name => $repo_uri, ... } >>.  This is likely
-to be changed slightly to instantiate sources with parameters and to allow
-repos to have more attributes than a name and URI.
+receives a hashref of the contents of the user's .gitconfig and an arrayref of
+extra arguments to the command, and returns a hashref like C<< { $repo_name =>
+$repo_uri, ... } >>.  This is likely to be changed slightly to instantiate
+sources with parameters and to allow repos to have more attributes than a name
+and URI.
 
 =cut
 
