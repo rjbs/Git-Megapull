@@ -29,11 +29,11 @@ sub repo_uris {
         END { ReadMode 0 }
         ReadMode 1;
         print "Username: ";
-        my $user = <STDIN>;
+        my $user = ReadLine 0;
         chomp $user;
         ReadMode 2;
         print "Password: ";
-        my $pass = <STDIN>;
+        my $pass = ReadLine 0;
         chomp $pass;
         ReadMode 0;
         print "\n";
