@@ -131,7 +131,7 @@ sub _clone_repo {
 sub __do_cmd {
   my ($self, $cmd) = @_;
   print "$cmd\n";
-  print `$cmd`;
+  system("$cmd");
 }
 
 1;
