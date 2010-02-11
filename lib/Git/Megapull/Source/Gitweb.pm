@@ -37,10 +37,10 @@ hashref with repo names as keys and repo URIs as values.
 
 sub repo_uris {
     my $self = shift;
-    my ($config, $args) = @_;
+    my (@args) = @_;
     my ($url, $user, $anon);
     GetOptionsFromArray(
-        $args,
+        \@args,
         'url=s'  => \$url,
         'user=s' => \$user,
         'anon'   => \$anon

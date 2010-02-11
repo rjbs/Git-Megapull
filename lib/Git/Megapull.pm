@@ -85,56 +85,10 @@ sub execute {
   die "bad source: not a Git::Megapull::Source\n"
     unless eval { $source->isa('Git::Megapull::Source') };
 
-  my $repos = $source->repo_uris($config, $args);
+  my $s = $source->new($opt);
 
-  my %existing_dir  = map { $_ => 1 } grep { $_ !~ m{\A\.} and -d $_ } <*>;
-
-  for my $name (sort { $a cmp $b } keys %$repos) {
-    my $name = $name;
-    my $uri  = $repos->{ $name };
-    my $dirname = $opt->{bare} ? "$name.git" : $name;
-
-    if (-d $dirname) {
-      if (not $opt->{clonely}) {
-        my $merge = $opt->{bare} ? '' : "&& git merge $opt->{origin}/master";
-        $self->__do_cmd(
-          "cd $dirname && "
-          . "git fetch $opt->{origin} $merge"
-        );
-      }
-    } else {
-      $self->_clone_repo($name, $uri, $opt);
-    }
-
-    delete $existing_dir{ $dirname };
-  }
-
-  for (keys %existing_dir) {
-    warn "unknown directory found: $_\n";
-  }
+  $s->update_all(@$args);
 }
 
 sub _default_source {}
-sub _clone_repo {
-  my ($self, $repo, $uri, $opt) = @_;
-
-  my $bare = $opt->{bare} ? '--bare' : '';
-  # git clone --origin doesn't work with --bare on git 1.6.6.1 or git
-  # 1.7: "fatal: --bare and --origin origin options are incompatible."
-  my $orig = $opt->{bare} ? ''       : "--origin $opt->{origin}";
-  $self->__do_cmd("git clone $orig $bare $uri");
-
-  if ($opt->{bare}) {
-      # Add an origin remote so we can git fetch later
-      my ($target) = $uri =~ m[/(.*?)$];
-      $self->__do_cmd("(cd $target && git remote add origin $uri && cd ..)");
-  }
-}
-
-sub __do_cmd {
-  my ($self, $cmd) = @_;
-  print "$cmd\n";
-  system("$cmd");
-}
-
 1;

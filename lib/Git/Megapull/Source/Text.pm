@@ -26,13 +26,17 @@ hashref with repo names as keys and repo URIs as values.
 
 sub repo_uris {
     my $self = shift;
-    my ($config, $args) = @_;
+    my (@args) = @_;
+
     my $filename;
-    if (@$args) {
-        $filename = $args->[0];
+    if (@args) {
+        $filename = $args[0];
     }
-    elsif (exists $config->{megapull}{text}) {
-        $filename = $config->{megapull}{text};
+    else {
+        my $config = Config::INI::Reader->read_file("$ENV{HOME}/.gitconfig");
+        if (exists $config->{megapull}{text}) {
+            $filename = $config->{megapull}{text};
+        }
     }
     die "Must provide a filename" unless $filename;
 
