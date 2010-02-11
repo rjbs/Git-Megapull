@@ -12,7 +12,7 @@ use String::RewritePrefix;
 
 This library implements the C<git-megaclone> command, which will find a list of
 remote repositories and clone them.  If they already exist, they will be
-updated from their origins, instead.
+updated from their remotes, instead.
 
 =head1 USAGE
 
@@ -51,7 +51,7 @@ sub opt_spec {
     # [ 'private|p!', 'include private repositories'     ],
     [ 'bare|b!',    'produce bare clones'                              ],
     [ 'clonely|c',  'only clone things that do not exist; skip others' ],
-    [ 'origin=o',   'name to use when creating or fetching; default: origin',
+    [ 'remote=r',   'name to use when creating or fetching; default: origin',
                     { default => 'origin' }                            ],
     [ 'source|s=s', "the source class (or a short form of it)",
                     { default => $ENV{GIT_MEGAPULL_SOURCE} }           ],
@@ -78,7 +78,7 @@ sub execute {
   );
 
   # XXX: validate $source as module name -- rjbs, 2009-09-13
-  # XXX: validate $opt->{origin} -- rjbs, 2009-09-13
+  # XXX: validate $opt->{remote} -- rjbs, 2009-09-13
 
   eval "require $source; 1" or die;
 

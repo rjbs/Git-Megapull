@@ -15,7 +15,7 @@ See L<Git::Megapull>.
 sub new {
     my $class = shift;
     my ($opt) = @_ == 1 ? $_[0] : {@_};
-    $opt->{origin} = 'origin' unless exists $opt->{origin};
+    $opt->{remote} = 'origin' unless exists $opt->{remote};
     bless $opt, $class;
 }
 
@@ -49,7 +49,7 @@ sub clone_repo {
   my ($self, $name, $uri) = @_;
 
   my $bare = $self->{bare} ? '--bare' : '';
-  $self->_do_cmd("git clone -o $self->{origin} $bare $uri 2>&1");
+  $self->_do_cmd("git clone -o $self->{remote} $bare $uri 2>&1");
 }
 
 sub update_repo {
@@ -57,8 +57,8 @@ sub update_repo {
 
   $self->_do_cmd(
     "cd $name && "
-    . "git fetch $self->{origin} && "
-    . "git merge $self->{origin}/master 2>&1"
+    . "git fetch $self->{remote} && "
+    . "git merge $self->{remote}/master 2>&1"
   );
 }
 
