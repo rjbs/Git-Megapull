@@ -2,6 +2,8 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
           add sources for gitweb and text files
+          refactor some things so that megapulling from within other scripts is
+          easier
 
 0.101750  2010-06-24 10:28:09 America/New_York
           improve interaction with bare repositories (thanks, AVAR)

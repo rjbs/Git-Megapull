@@ -10,7 +10,7 @@ use String::RewritePrefix;
 
 =head1 OVERVIEW
 
-This library implements the C<git-megaclone> command, which will find a list of
+This library implements the C<git-megapull> command, which will find a list of
 remote repositories and clone them.  If they already exist, they will be
 updated from their remotes, instead.
 
@@ -20,6 +20,7 @@ updated from their remotes, instead.
     -b --bare       produce bare clones
     -c --clonely    only clone things that do not exist; skip others
     -s --source     the source class (or a short form of it)
+    -r --remote     the remote to update (defaults to 'origin')
 
 The source may be given as a full Perl class name prepended with an equals
 sign, like C<=Git::Megapull::Source::Github> or as a short form, dropping the
@@ -38,11 +39,10 @@ F<~/.gitconfig> will be consulted.
 
 Right now, the API for how sources work is pretty lame and likely to change.
 Basically, a source is a class that implements the C<repo_uris> method, which
-receives a hashref of the contents of the user's .gitconfig and an arrayref of
-extra arguments to the command, and returns a hashref like C<< { $repo_name =>
-$repo_uri, ... } >>.  This is likely to be changed slightly to instantiate
-sources with parameters and to allow repos to have more attributes than a name
-and URI.
+receives the extra arguments given to the command, and returns a hashref like
+C<< { $repo_name => $repo_uri, ... } >>.  This is likely to be changed slightly
+to instantiate sources with parameters and to allow repos to have more
+attributes than a name and URI.
 
 =cut
 
