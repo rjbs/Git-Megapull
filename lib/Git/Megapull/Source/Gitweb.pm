@@ -90,7 +90,7 @@ sub repo_uris {
         @repos = map { "git://$base_url/$_" } @repos;
     }
     else {
-        die "Need a username" unless $user;
+        die "Need a user" unless $user;
         @repos = map { s+.*/++; "$user\@$base_url:$_" } @repos;
     }
     my %repos = map { $names[$_], $repos[$_] } 0..$#repos;
