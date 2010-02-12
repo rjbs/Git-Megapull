@@ -51,7 +51,7 @@ sub opt_spec {
     # [ 'private|p!', 'include private repositories'     ],
     [ 'bare|b!',    'produce bare clones'                              ],
     [ 'clonely|c',  'only clone things that do not exist; skip others' ],
-    [ 'remote=r',   'name to use when creating or fetching; default: origin',
+    [ 'remote|r=s', 'name to use when creating or fetching; default: origin',
                     { default => 'origin' }                            ],
     [ 'source|s=s', "the source class (or a short form of it)",
                     { default => $ENV{GIT_MEGAPULL_SOURCE} }           ],
