@@ -96,7 +96,7 @@ sub execute {
         my $merge = $opt->{bare} ? '' : "&& git merge $opt->{origin}/master";
         $self->__do_cmd(
           "cd $dirname && "
-          . "git fetch $opt->{origin} $merge 2>&1"
+          . "git fetch $opt->{origin} $merge"
         );
       }
     } else {
@@ -119,12 +119,12 @@ sub _clone_repo {
   # git clone --origin doesn't work with --bare on git 1.6.6.1 or git
   # 1.7: "fatal: --bare and --origin origin options are incompatible."
   my $orig = $opt->{bare} ? ''       : "--origin $opt->{origin}";
-  $self->__do_cmd("git clone $orig $bare $uri 2>&1");
+  $self->__do_cmd("git clone $orig $bare $uri");
 
   if ($opt->{bare}) {
       # Add an origin remote so we can git fetch later
       my ($target) = $uri =~ m[/(.*?)$];
-      $self->__do_cmd("(cd $target && git remote add origin $uri && cd ..) 2>&1");
+      $self->__do_cmd("(cd $target && git remote add origin $uri && cd ..)");
   }
 }
 
