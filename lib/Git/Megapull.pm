@@ -115,7 +115,10 @@ sub _clone_repo {
   my ($self, $repo, $uri, $opt) = @_;
 
   my $bare = $opt->{bare} ? '--bare' : '';
-  $self->__do_cmd("git clone -o $opt->{origin} $bare $uri 2>&1");
+  # git clone --origin doesn't work with --bare on git 1.6.6.1 or git
+  # 1.7: "fatal: --bare and --origin origin options are incompatible."
+  my $orig = $opt->{bare} ? ''       : "--origin $opt->{origin}";
+  $self->__do_cmd("git clone $orig $bare $uri 2>&1");
 }
 
 sub __do_cmd {
