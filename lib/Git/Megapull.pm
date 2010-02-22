@@ -89,20 +89,21 @@ sub execute {
   for my $name (sort { $a cmp $b } keys %$repos) {
     my $name = $name;
     my $uri  = $repos->{ $name };
+    my $dirname = $opt->{bare} ? "$name.git" : $name;
 
-    if (-d $name) {
+    if (-d $dirname) {
       if (not $opt->{clonely}) {
+        my $merge = $opt->{bare} ? '' : "&& git merge $opt->{origin}/master";
         $self->__do_cmd(
-          "cd $name && "
-          . "git fetch $opt->{origin} && "
-          . "git merge $opt->{origin}/master 2>&1"
+          "cd $dirname && "
+          . "git fetch $opt->{origin} $merge 2>&1"
         );
       }
     } else {
       $self->_clone_repo($name, $uri, $opt);
     }
 
-    delete $existing_dir{ $name };
+    delete $existing_dir{ $dirname };
   }
 
   for (keys %existing_dir) {
