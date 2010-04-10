@@ -32,9 +32,10 @@ hashref with repo names as keys and repo URIs as values.
 =cut
 
 sub repo_uris {
-  my $config  = Config::INI::Reader->read_file("$ENV{HOME}/.gitconfig");
-  my $login   = $config->{github}{login} || die "no github login\n";
-  my $token   = $config->{github}{token} || die "no github token\n";
+  my $config_file = "$ENV{HOME}/.gitconfig";
+  my $config      = Config::INI::Reader->read_file($config_file);
+  my $login       = $config->{github}{login} || die "No github.login found in `$config_file'\n";
+  my $token       = $config->{github}{token} || die "No github.token found in `$config_file'\n";
 
   my $json =
     get("http://github.com/api/v1/json/$login?login=$login&token=$token");
