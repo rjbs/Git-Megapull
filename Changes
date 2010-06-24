@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+          improve interaction with bare repositories (thanks, AVAR)
+          better error messages (thanks, AVAR)
 
 0.100110  2010-01-11 19:10:14 America/New_York
           do not require users to install JSON::XS

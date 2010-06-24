@@ -1,6 +1,8 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
+package
+  git_megapull;
 # ABSTRACT: clone or update all repositories found elsewhere
 
 use Git::Megapull;
