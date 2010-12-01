@@ -10,7 +10,7 @@ use String::RewritePrefix;
 
 =head1 OVERVIEW
 
-This library implements the C<git-megaclone> command, which will find a list of
+This library implements the C<git-megapull> command, which will find a list of
 remote repositories and clone them.  If they already exist, they will be
 updated from their origins, instead.
 
