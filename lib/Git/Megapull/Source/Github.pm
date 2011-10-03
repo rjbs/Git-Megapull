@@ -5,7 +5,7 @@ use base 'Git::Megapull::Source';
 # ABSTRACT: clone/update all your repositories from github.com
 
 use LWP::UserAgent;
-use Config::INI::Reader;
+use Config::GitLike;
 use JSON 2 ();
 
 =head1 OVERVIEW
@@ -33,9 +33,9 @@ hashref with repo names as keys and repo URIs as values.
 
 sub repo_uris {
   my $config_file = "$ENV{HOME}/.gitconfig";
-  my $config      = Config::INI::Reader->read_file($config_file);
-  my $login       = $config->{github}{login} || die "No github.login found in `$config_file'\n";
-  my $token       = $config->{github}{token} || die "No github.token found in `$config_file'\n";
+  my $config = Config::GitLike->new(confname => $config_file);
+  my $login       = $config->get(key => "github.login") || die "No github.login found in `$config_file'\n";
+  my $token       = $config->get(key => "github.token") || die "No github.token found in `$config_file'\n";
 
   my $json = _get_json("http://github.com/api/v1/json/$login?login=$login&token=$token");
 
