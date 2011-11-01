@@ -5,7 +5,7 @@ use base 'App::Cmd::Simple';
 # ABSTRACT: clone or update all repositories found elsewhere
 
 use autodie;
-use Config::INI::Reader;
+use Config::GitLike;
 use String::RewritePrefix;
 
 =head1 OVERVIEW
@@ -61,8 +61,9 @@ sub execute {
 
   my $source = $opt->{source};
   unless ($source) {
-    my $config = Config::INI::Reader->read_file("$ENV{HOME}/.gitconfig");
-    $source = $config->{megapull}{source};
+    my $config = Config::GitLike->new(confname => "$ENV{HOME}/.gitconfig");
+    $config->load;
+    $source = $config->get(key => "megapull.source");
   }
 
   $source ||= $self->_default_source;
