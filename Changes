@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.101752  2013-10-31 10:00:10 America/New_York
           update repo; direct new users to App::GitGot instead
 
 0.101751  2011-10-31 22:48:24 America/New_York
