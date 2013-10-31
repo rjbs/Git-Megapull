@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+          update repo; direct new users to App::GitGot instead
 
 0.101751  2011-10-31 22:48:24 America/New_York
           use Config::GitLike, not Config::INI (thanks, AVAR!)

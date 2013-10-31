@@ -10,6 +10,9 @@ use String::RewritePrefix;
 
 =head1 OVERVIEW
 
+B<Achtung!>  Probably you can skip using Git::Megapull.  Instead, go check out
+L<App::GitGot>.
+
 This library implements the C<git-megapull> command, which will find a list of
 remote repositories and clone them.  If they already exist, they will be
 updated from their origins, instead.
